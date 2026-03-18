@@ -39,6 +39,13 @@
       kubelet_node_ip_cidr: "{{ kubelet_node_ip_cidr }}"
       etcd_metrics_bind_cidr: "{{ etcd_metrics_bind_cidr }}"
 
+- name: debug CP _kube_apiserver_advertise_address
+  ansible.builtin.debug:
+    msg: |
+      {% for server in groups[kube_cp_group] -%}
+        hostvars[server]
+      {% endfor %}
+
 - name: debug _address internal vars
   ansible.builtin.debug:
     msg:
