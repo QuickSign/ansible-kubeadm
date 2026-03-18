@@ -29,6 +29,13 @@
     - 'pkg_{{ ansible_distribution }}.yml'
     - 'pkg_{{ ansible_os_family }}.yml'
 
+- name: debug CP _kube_apiserver_advertise_address
+  ansible.builtin.debug:
+    msg: |
+      {% for server in groups[kube_cp_group] -%}
+        {{ hostvars[server] }}
+      {% endfor %}
+
 - name: debug _cidr vars
   ansible.builtin.debug:
     msg:
@@ -38,13 +45,6 @@
       kube_scheduler_bind_cidr: "{{ kube_scheduler_bind_cidr }}"
       kubelet_node_ip_cidr: "{{ kubelet_node_ip_cidr }}"
       etcd_metrics_bind_cidr: "{{ etcd_metrics_bind_cidr }}"
-
-- name: debug CP _kube_apiserver_advertise_address
-  ansible.builtin.debug:
-    msg: |
-      {% for server in groups[kube_cp_group] -%}
-        hostvars[server]
-      {% endfor %}
 
 - name: debug _address internal vars
   ansible.builtin.debug:
