@@ -29,6 +29,25 @@
     - 'pkg_{{ ansible_distribution }}.yml'
     - 'pkg_{{ ansible_os_family }}.yml'
 
+- name: debug _cidr vars
+  ansible.builtin.debug:
+    msg:
+      kube_control_plane_cidr: "{{ kube_control_plane_cidr }}"
+      kube_apiserver_advertise_cidr: "{{ kube_apiserver_advertise_cidr }}"
+      kube_controller_manager_bind_cidr: "{{ kube_controller_manager_bind_cidr }}"
+      kube_scheduler_bind_cidr: "{{ kube_scheduler_bind_cidr }}"
+      kubelet_node_ip_cidr: "{{ kubelet_node_ip_cidr }}"
+      etcd_metrics_bind_cidr: "{{ etcd_metrics_bind_cidr }}"
+
+- name: debug _address internal vars
+  ansible.builtin.debug:
+    msg:
+      _kube_apiserver_advertise_address: "{{ _kube_apiserver_advertise_address }}"
+      _etcd_metrics_bind_address: "{{ _etcd_metrics_bind_address }}"
+      _kube_controller_manager_bind_address: "{{ _kube_controller_manager_bind_address }}"
+      _kube_scheduler_bind_address: "{{ _kube_scheduler_bind_address }}"
+      _kubelet_node_ip: "{{ _kubelet_node_ip }}"
+
 - name: 'Template HAProxy config'
   template:
     src: haproxy.cfg.j2
