@@ -11,6 +11,10 @@
     - packages.haproxy|default([])|select('match', _apiserver_proxy_haproxy_version)|list|length == 0
   register: haproxy_version
 
+# The exact version comes first: APT gives each version the priority of the
+# first matching record. The fallback keeps haproxy on the expected branch
+# when the exact version leaves the repository; it must stay above other
+# repository priorities and below 1000 so it never downgrades.
 - name: "Create pinning files"
   copy:
     dest: /etc/apt/preferences.d/50-haproxy
@@ -23,6 +27,10 @@
       {%- endif %}
 
       Pin-Priority: 1001
+
+      package: haproxy
+      Pin: version {{ _apiserver_proxy_haproxy_version }}
+      Pin-Priority: {{ apiserver_proxy_haproxy_fallback_pin_priority }}
 
 - name: 'Install HAProxy package'
   apt:
