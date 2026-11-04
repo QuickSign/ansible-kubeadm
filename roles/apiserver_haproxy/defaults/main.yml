@@ -1,6 +1,7 @@
 ---
 apiserver_proxy_apiserver_port: 6443
 _apiserver_proxy_haproxy_version: '2.6.*'
+apiserver_proxy_haproxy_fallback_pin_priority: 995
 force_apt_update: false
 haproxy_repo_url: '{{ haproxy_upstream_repo_url }}'
 haproxy_gpg_url: '{{ haproxy_upstream_gpg_url }}'
